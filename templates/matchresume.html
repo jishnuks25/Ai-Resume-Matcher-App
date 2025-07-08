@@ -38,7 +38,7 @@
               <h2>Job Description and Resume Matcher</h2>
           </div>
           <div class="card-body">
-              <form action="/matcher" method="post" enctype="multipart/form-data">
+              <form method="post" action="/matcher" enctype="multipart/form-data">
                   <div class="form-group">
                       <label for="job_description">Job Description</label>
                       <textarea class="form-control" id="job_description" name="job_description" rows="5"></textarea>
@@ -46,12 +46,19 @@
                   <div class="form-group">
                       <label for="resumes">Upload Resumes</label>
                       <p>Please Upload Resumes more than 5................</p>
-                      <input type="file" class="form-control" id="resumes" name="resumes" multiple required accept=".pdf .docx .txt">
+                      <input type="file" class="form-control" id="resumes" name="resumes" multiple required accept=".pdf, .docx, .txt">
                   </div>
                   <button type="submit" class="btn btn-primary" > Match Resumes</button>
               </form>
               {% if message %}
-              <p>{{ message }}</p>
+              <div class="alert alert-info mt-4">
+                  <p>{{ message }}</p>
+                  <ul>
+                      {% for index in range(top_resumes|length) %}
+                      <li>{{ top_resumes[index] }} (Similarity Score : {{ similarity_score[index] }})</li>
+                      {% endfor %}
+                  </ul>
+              </div>
               {% endif %}
           </div>
       </div>
